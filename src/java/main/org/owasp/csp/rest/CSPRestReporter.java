@@ -17,6 +17,7 @@ public class CSPRestReporter {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public CSPReport sayPlainTextHello(CSPReport report) {
+		System.out.println(report);
 		  return report;
 	}
 
