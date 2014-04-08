@@ -22,11 +22,4 @@ public class CSPApplication extends Application {
 		return clazz;
 	}
 
-	@Override
-	public Map<String, Object> getProperties() {
-		Map<String, Object> map = new HashMap<>();
-		map.put("com.sun.jersey.api.json.POJOMappingFeature<", "true");
-		return map;
-	}
-
 }

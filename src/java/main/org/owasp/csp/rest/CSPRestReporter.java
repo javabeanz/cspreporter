@@ -24,7 +24,7 @@ public class CSPRestReporter {
 	@Produces(MediaType.APPLICATION_JSON)
 	public CSPReport sayPlainTextHelloget() {
 	  Report report = new Report();
-	  report.blockedUri = "http://blocked";
+	  report.blockedUri = "http://blockeda";
 		//return "{\"result\": \"Hello world\"}";
 		return new CSPReport(report);
 	}
