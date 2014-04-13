@@ -2,6 +2,7 @@ package org.owasp.csp.rest;
 
 import static com.codahale.metrics.MetricRegistry.name;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,19 +14,31 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import com.codahale.metrics.Counter;
 import com.codahale.metrics.JmxReporter;
 import com.codahale.metrics.MetricRegistry;
+import com.mongodb.DB;
+import com.mongodb.Mongo;
+
+import de.flapdoodle.embed.mongo.distribution.Version;
+import de.flapdoodle.embed.mongo.tests.MongodForTestsFactory;
 
 @ApplicationPath("/resources")
 public class CSPApplication extends Application {
 
-	public MetricRegistry metrics = new MetricRegistry();
+	public static MetricRegistry metrics = new MetricRegistry();
 
 	public JmxReporter reporter = JmxReporter.forRegistry(metrics).build();
 
-	public Counter evictions = metrics.counter(name(CSPRestReporter.class,
+	public static DB db;
+
+	public static Counter counter = metrics.counter(name(CSPRestReporter.class,
 			"processReport"));
 
-	public CSPApplication() {
+	private static MongodForTestsFactory testsFactory;
+
+	public CSPApplication() throws IOException {
 		reporter.start();
+		testsFactory = MongodForTestsFactory.with(Version.Main.PRODUCTION);
+		final Mongo mongo = testsFactory.newMongo();
+		db = testsFactory.newDB(mongo);
 	}
 
 	@Override
@@ -33,7 +46,6 @@ public class CSPApplication extends Application {
 		Set<Class<?>> clazz = new HashSet<>();
 		clazz.add(CSPRestReporter.class);
 		clazz.add(JacksonFeature.class);
-		clazz.add(MyApplicationBinder.class);
 		return clazz;
 	}
 
