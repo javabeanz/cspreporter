@@ -30,7 +30,7 @@
    	<dependency>
 	    <groupId>de.flapdoodle.embed</groupId>
 	    <artifactId>de.flapdoodle.embed.mongo</artifactId>
-	    <version>1.43</version>
+	    <version>4.6.3</version>
 	</dependency>
 	<dependency>
 		<groupId>org.mongojack</groupId>
